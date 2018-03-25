@@ -223,6 +223,10 @@ def add_routes(map):
         controller='api/categories',
         action='index')
 
+    map.connect('/api/podcasts/{action}',
+        controller='api/podcasts',
+        action='index')
+
     ##################
     # Fallback Route #
     ##################
