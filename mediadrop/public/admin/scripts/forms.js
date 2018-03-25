@@ -9,8 +9,20 @@
 
 String.implement({
 
+	transliterate: function() {
+		var 	cyr = "щ   ш  ч  ц  ю  я  ё  ж  ъ ы э а б в г д е з и й к л м н о п р с т у ф х  ь і ї".split(/ +/g),
+			eng = "sch sh ch cz yu ya yo zh ` y e a b v g d e z i y k l m n o p r s t u f kh ` i yi".split(/ +/g);
+
+		var text = this.toString();
+		var x;
+		for(x = 0; x < cyr.length; x++) {
+			text = text.split(cyr[x]).join(eng[x]);
+		}
+		return text;
+	},
+
 	slugify: function(){
-		return this.toString().trim().tidy().standardize().toLowerCase()
+		return this.toString().trim().tidy().standardize().toLowerCase().transliterate()
 			.replace(/\s+/g,'-')
 			.replace(/&(\#x?[0-9a-f]{2,6}|[a-z]{2,10});/g, '') // strip xhtml entities, they should be entered as unicode anyway
 			.replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss') // some common german chars
