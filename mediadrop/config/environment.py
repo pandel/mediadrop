@@ -98,7 +98,7 @@ def load_environment(global_conf, app_conf):
         Podcast._thumb_dir: {
             's': (128, 128),
             'm': (160, 160),
-            'l': (600, 600),
+            'l': (1400, 1400),  # itunes requires 1400x1400 minimum
         },
     }
 
