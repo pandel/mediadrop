@@ -367,7 +367,7 @@ class MediaController(BaseController):
             id = media.id,
             slug = media.slug,
             url = media_url,
-            title = media.title,
+            title = media.display_title,
             author = media.author.name,
             type = media.type,
             podcast = podcast_slug,

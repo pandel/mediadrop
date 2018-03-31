@@ -21,6 +21,7 @@ belongs to a :class:`mediadrop.model.podcasts.Podcast`.
 """
 
 from datetime import datetime
+import re
 
 from sqlalchemy import Table, ForeignKey, Column, event, sql
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -33,6 +34,7 @@ from sqlalchemy.types import Boolean, DateTime, Integer, Unicode, UnicodeText
 from mediadrop.lib.auth import Resource
 from mediadrop.lib.compat import any
 from mediadrop.lib.filetypes import AUDIO, AUDIO_DESC, VIDEO, guess_mimetype
+from mediadrop.lib.i18n import ngettext
 from mediadrop.lib.players import pick_any_media_file, pick_podcast_media_file
 from mediadrop.lib.util import calculate_popularity
 from mediadrop.lib.xhtml import line_break_xhtml, strip_xhtml
@@ -582,6 +584,12 @@ class Media(object):
         for file in self.files:
             uris.extend(file.get_uris())
         return uris
+
+    @property
+    def display_title(self):
+        if re.match(r'^\d+$', self.title):
+            return '%s #%d' % (ngettext(u'Episode', u'Episodes', 1), int(self.title))
+        return self.title
 
 class MediaFileQuery(Query):
     pass
