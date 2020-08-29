@@ -68,7 +68,7 @@ See LICENSE.txt in the main project directory, for more information.
 		      py:with="permalink = h.url_for(controller='/media', action='view', slug=media.slug, podcast_slug=podcast.slug, qualified=True)">
 			<title py:content="media.display_title" />
 			<guid py:content="permalink" />
-			<pubDate py:content="media.publish_on.strftime('%a, %d %b %Y %H:%M:%S %Z')" />
+			<pubDate py:content="media.publish_on_tzaware.strftime('%a, %d %b %Y %H:%M:%S %Z')" />
 			<comments py:content="permalink + '#comments'" />
 			<author>${media.author.email}<py:if test="media.author.name"> (${media.author.name})</py:if></author>
 			<itunes:author py:if="media.author.name" py:content="media.author.name" />

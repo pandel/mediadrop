@@ -23,6 +23,8 @@ belongs to a :class:`mediadrop.model.podcasts.Podcast`.
 from datetime import datetime
 import re
 
+from babel.util import LOCALTZ
+
 from sqlalchemy import Table, ForeignKey, Column, event, sql
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import (attributes, backref, class_mapper, column_property,
@@ -590,6 +592,12 @@ class Media(object):
         if re.match(r'^\d+$', self.title):
             return '%s #%d' % (ngettext(u'Episode', u'Episodes', 1), int(self.title))
         return self.title
+
+    @property
+    def publish_on_tzaware(self):
+        if self.publish_on.tzinfo is None:
+            return self.publish_on.replace(tzinfo=LOCALTZ)
+        return self.publish_on
 
 class MediaFileQuery(Query):
     pass
