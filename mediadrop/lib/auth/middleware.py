@@ -153,7 +153,9 @@ def classifier_for_flash_uploads(environ):
     if classification != 'browser':
         return classification
     user_agent = environ.get('HTTP_USER_AGENT', '')
-    if environ['REQUEST_METHOD'] == 'POST' and ('Flash' in user_agent):
+    requested_with = environ.get('HTTP_X_REQUESTED_WITH', '')
+    if environ['REQUEST_METHOD'] == 'POST' and (
+            ('Flash' in user_agent) or ('Flash' in requested_with)):
         session_key = environ['repoze.who.plugins']['cookie'].cookie_name
         # Construct a temporary request object since this is called before
         # pylons.request is populated. Re-instantiation later comes cheap.
@@ -164,5 +166,3 @@ def classifier_for_flash_uploads(environ):
         except (KeyError, UnicodeEncodeError):
             pass
     return classification
-
-
