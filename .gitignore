@@ -9,6 +9,7 @@
 *.egg-info
 dist
 *.egg
+.eggs
 env
 test.ini
 .pydev*
